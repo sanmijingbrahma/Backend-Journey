@@ -1,5 +1,17 @@
+const { log } = require("console");
 const http = require("http");
 const url = require("url")
+
+
+// logger middleware
+const logger = (req,res,next)=>{
+    console.log(`Requrested Method ${req.method}, Request URL: ${req.url}`);
+    next();
+    
+}
+
+
+
 
 const server = http.createServer((req,res)=>{
     res.writeHead(200,{"content-type":"text/plain","X-Custom-Header":"Learning Backend"});
