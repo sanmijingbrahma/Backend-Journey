@@ -33,10 +33,42 @@ app.use("/between",(req,res,next)=>{
     }
 })
 
+// Log the requesst
+app. use((req,res,next)=>{
+    console.log(`Method :${req.method}, URL : ${req.url}`);
+    next();
+    
+})
+
+app.use((err,req,res,next)=>{
+    console.log(err);
+    next();
+})
+
+// Home route
 app.get("/",(req,res)=>{
     res.send("Welcome to the root")
 })
 
+app.get("/error",(req,res,next)=>{
+    const error = new Error("Oh ohThis is an error!")
+    error.status = 404;
+    next(error);
+})
+
+app.get("/time",(req,res)=>{
+    const time = new Date().toISOString();
+    res.send(time);
+})
+
+app.get("/status",(req,res)=>{
+    res.send("Great!")
+})
+
+app.get("/echo",(req,res)=>{
+    const data = req.body;
+    res.send(data);
+})
 
 app.get("/between",(req,res)=>{
     res.send("Wow, You are at correct time to access this website")
