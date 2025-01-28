@@ -1,7 +1,7 @@
 const express = require('express') 
 const PORT = 8080;
 
-
+let TotalRequest = 0;
 
 const app = express();
 
@@ -12,6 +12,15 @@ app.use((req,res,next)=>{
     
 })
 
+// Middleware to log the number of requrest to the server.
+app.use((req,res,next)=>{
+    // increment the counter
+    TotalRequest++;
+    console.log(`Total Request to the Server : ${TotalRequest}`);
+    next();
+})
+
+// Middelware to make a route accessable to a specifi time
 app.use("/between",(req,res,next)=>{
 
     const time = new Date();
@@ -22,8 +31,6 @@ app.use("/between",(req,res,next)=>{
         res.status(401).send("You are not allowed at the moment")
     
     }
-    
-    
 })
 
 app.get("/",(req,res)=>{
